@@ -65,46 +65,57 @@ namespace CollectionsMasterConsoleUI
 
             /*   Set Up   */
             //TODO: Create an integer List
-            
+            var numberList = new List<int>();
+
 
             //TODO: Print the capacity of the list to the console
-            
 
+            Console.WriteLine($"Capacity:{numberList.Count}");
             //TODO: Populate the List with 50 random numbers between 0 and 50 you will need a method for this            
             
-
+            Populater(numberList);
             //TODO: Print the new capacity
-            
+            Console.WriteLine($"New Capacity:{numberList.Count}");
 
             Console.WriteLine("---------------------");
 
             //TODO: Create a method that prints if a user number is present in the list
             //Remember: What if the user types "abc" accident your app should handle that!
-            Console.WriteLine("What number will you search for in the number list?");
             
+            int userNumber;
+            bool isANumber;
+
+            do
+            {
+                Console.WriteLine("What number will you search for in the number list?");
+                isANumber = int.TryParse(Console.ReadLine(), out userNumber);
+            } while (isANumber == false);
+            NumberChecker(numberList, userNumber);
             Console.WriteLine("-------------------");
 
             Console.WriteLine("All Numbers:");
             //UNCOMMENT this method to print out your numbers from arrays or lists
-            //NumberPrinter();
+            NumberPrinter(numberList);
             Console.WriteLine("-------------------");
 
 
             //TODO: Create a method that will remove all odd numbers from the list then print results
             Console.WriteLine("Evens Only!!");
-            
+            OddKiller(numberList);
             Console.WriteLine("------------------");
 
             //TODO: Sort the list then print results
             Console.WriteLine("Sorted Evens!!");
-            
+            numberList.Sort();
+            NumberPrinter(numberList);
             Console.WriteLine("------------------");
 
             //TODO: Convert the list to an array and store that into a variable
-            
+            var myArray = numberList.ToArray();
 
             //TODO: Clear the list
-            
+            numberList.Clear();
+            NumberPrinter(numberList);
 
             #endregion
         }
@@ -124,17 +135,46 @@ namespace CollectionsMasterConsoleUI
 
         private static void OddKiller(List<int> numberList)
         {
-            
+           for(int i = numberList.Count - 1; i >= 0; i--)
+            {
+                if (numberList[i] % 2 != 0)
+                {
+                    numberList.Remove(numberList[i]);
+                }
+
+            }
+           //var evens = numberList.Where(x => x % 2 != 0);
+           //use the code above next time if you can
+            NumberPrinter(numberList);
+
         }
 
         private static void NumberChecker(List<int> numberList, int searchNumber)
         {
-            
+            //Print to the console that the number is inside of the list
+
+            if (numberList.Contains(searchNumber))
+            {
+                Console.WriteLine($"Yes we have the number you're looking for");
+            }
+            else
+            {
+                Console.WriteLine($"These aren't the droids you're looking for");
+                Console.WriteLine($"These aren't the droids you're looking for");
+            }
         }
 
         private static void Populater(List<int> numberList)
         {
-            Random rng = new Random();
+            while (numberList.Count < 50)
+            {
+                Random rng = new Random();
+                var number = rng.Next(0, 50);
+
+                numberList.Add(number);
+            }
+
+            NumberPrinter(numberList);
 
         }
 
